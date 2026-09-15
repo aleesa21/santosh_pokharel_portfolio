@@ -8,7 +8,7 @@ function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#f8f7fb]/95 backdrop-blur-md border-b border-slate-200/60 px-4 md:px-8 py-3 transition-all">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="w-full mx-auto flex items-center justify-between">
         <a href="#" className="flex items-center gap-3 group">
           <div className="h-10 w-10 shrink-0 bg-red-900 text-white font-bold text-lg grid place-items-center rounded-full shadow-sm group-hover:bg-red-800 transition-colors">
             स
