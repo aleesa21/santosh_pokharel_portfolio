@@ -7,12 +7,13 @@ function Header() {
   const navLinks = ["News", "Blogs", "Videos", "Thoughts", "Contacts"];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#f8f7fb]/95 backdrop-blur-md border-b border-slate-200/60 px-4 md:px-8 2xl:px-20 py-3 transition-all">
+    <header className="sticky top-0 relative z-50 w-full bg-[#f8f7fb]/95 backdrop-blur-md border-b border-slate-200/60 px-4 md:px-8 py-3 transition-all">
+      {" "}
       <div className="w-full mx-auto flex items-center justify-between">
         <a href="#" className="flex items-center gap-3 group">
-          <div className="h-10 w-10 shrink-0 bg-red-900 text-white font-bold text-lg grid place-items-center rounded-full shadow-sm group-hover:bg-red-800 transition-colors">
+          {/* <div className="h-10 w-10 shrink-0 bg-red-900 text-white font-bold text-lg grid place-items-center rounded-full shadow-sm group-hover:bg-red-800 transition-colors">
             स
-          </div>
+          </div> */}
           <div className="flex flex-col">
             <span className="font-semibold text-slate-900 leading-tight group-hover:text-red-900 transition-colors">
               Santosh Pokharel
@@ -23,7 +24,7 @@ function Header() {
           </div>
         </a>
 
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden  md:flex items-center gap-6">
           {navLinks.map((link) => (
             <a
               key={link}
@@ -53,9 +54,8 @@ function Header() {
           )}
         </button>
       </div>
-
       {isMenuOpen && (
-        <nav className="md:hidden pt-4 pb-3 border-t border-slate-200 mt-3 flex flex-col gap-3">
+        <nav className="md:hidden absolute top-full left-0 w-full bg-[#f8f7fb] border-y border-slate-200  shadow-lg px-4 pt-4 pb-6 flex flex-col gap-3">
           {navLinks.map((link) => (
             <a
               key={link}
