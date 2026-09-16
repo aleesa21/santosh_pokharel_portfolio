@@ -56,34 +56,35 @@ function HeroSection() {
         </div>
       </div>
 
-      <div className="relative z-10 flex-1 min-h-0 mx-auto w-full px-4 md:px-8 py-3 md:py-5 flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-6 lg:gap-10 w-full max-h-full">
+      {/* Main content */}
+      <div className="relative z-10 flex-1 min-h-0 mx-auto w-full px-4 md:px-15 2xl:px-20 py-3 md:py-5 2xl:py-8 flex items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-6 lg:gap-10 2xl:gap-24 w-full h-full">
           {/* Left Text Content Column */}
-          <div className="lg:col-span-7 flex flex-col gap-3">
+          <div className="lg:col-span-7 flex flex-col gap-3 2xl:gap-7">
             {/* Live Indicator Badge */}
-            <div className="inline-flex items-center gap-2 self-start bg-gradient-to-r from-red-50 to-red-100/80 border border-red-200/90 px-3 py-1 rounded-full text-red-700 font-bold text-[11px] tracking-wider shadow-xs">
-              <HiRadio className="w-4 h-4 text-red-600 animate-pulse" />
+            <div className="inline-flex items-center gap-2 self-start bg-gradient-to-r from-red-50 to-red-100/80 border border-red-200/90 px-3 py-1 2xl:px-5 2xl:py-2 rounded-full text-red-700 font-bold text-[11px] 2xl:text-sm tracking-wider shadow-xs">
+              <HiRadio className="w-4 h-4 2xl:w-6 2xl:h-6 text-red-600 animate-pulse" />
               <span>ON AIR · GTV NEPAL</span>
             </div>
 
             {/* Name Header */}
             <div className="space-y-0">
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-none">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl 2xl:text-9xl font-black text-slate-900 tracking-tight leading-none">
                 Santosh <span className="text-red-700">Pokharel</span>
               </h1>
-              <div className="pt-1 flex items-center gap-2">
-                <h2 className="text-sm sm:text-base text-slate-600 font-medium tracking-wide">
+              <div className="pt-1 2xl:pt-4 flex items-center gap-2 2xl:gap-4">
+                <h2 className="text-sm sm:text-base 2xl:text-2xl text-slate-600 font-medium tracking-wide">
                   सन्तोष पोखरेल
                 </h2>
                 <span className="text-slate-300">•</span>
-                <span className="text-xs font-semibold text-slate-500">
+                <span className="text-xs 2xl:text-base font-semibold text-slate-500">
                   Kathmandu, Nepal
                 </span>
               </div>
             </div>
 
             {/* Category Badges */}
-            <div className="flex flex-wrap gap-1.5 pt-0.5">
+            <div className="flex flex-wrap gap-1.5 2xl:gap-3 pt-0.5">
               {[
                 "Senior Reporter",
                 "Politics & Society",
@@ -91,7 +92,7 @@ function HeroSection() {
               ].map((tag) => (
                 <span
                   key={tag}
-                  className="px-2.5 py-1 bg-white/90 text-slate-700 text-xs font-semibold rounded-lg border border-slate-200 shadow-2xs hover:bg-slate-50 transition-colors"
+                  className="px-2.5 py-1 2xl:px-4 2xl:py-2 bg-white/90 text-slate-700 text-xs 2xl:text-base font-semibold rounded-lg border border-slate-200 shadow-2xs hover:bg-slate-50 transition-colors"
                 >
                   {tag}
                 </span>
@@ -99,40 +100,40 @@ function HeroSection() {
             </div>
 
             {/* Biography */}
-            <p className="max-w-xl text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed font-normal">
+            <p className="max-w-xl 2xl:max-w-3xl text-xs sm:text-sm md:text-base 2xl:text-xl text-slate-600 leading-relaxed font-normal">
               Covering ground-level investigative stories, public policy, and
               key political developments across all 77 districts of Nepal for
               GTV News.
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-1">
-              <button className="flex items-center gap-2 px-5 py-2.5 text-xs sm:text-sm font-bold text-white bg-red-700 hover:bg-red-800 active:scale-95 rounded-xl shadow-md shadow-red-900/10 transition-all cursor-pointer group">
-                <FaPlay className="w-3.5 h-3.5 fill-current group-hover:scale-110 transition-transform" />
+            <div className="flex flex-wrap items-center gap-3 2xl:gap-5 pt-1">
+              <button className="flex items-center gap-2 2xl:gap-3 px-5 py-2.5 2xl:px-9 2xl:py-4 text-xs sm:text-sm 2xl:text-lg font-bold text-white bg-red-700 hover:bg-red-800 active:scale-95 rounded-xl shadow-md shadow-red-900/10 transition-all cursor-pointer group">
+                <FaPlay className="w-3.5 h-3.5 2xl:w-5 2xl:h-5 fill-current group-hover:scale-110 transition-transform" />
                 Watch Latest Reports
               </button>
-              <button className="flex items-center gap-2 px-5 py-2.5 text-xs sm:text-sm font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 active:scale-95 rounded-xl shadow-2xs transition-all cursor-pointer">
-                <FaNewspaper className="w-4 h-4 text-slate-500" />
+              <button className="flex items-center gap-2 2xl:gap-3 px-5 py-2.5 2xl:px-9 2xl:py-4 text-xs sm:text-sm 2xl:text-lg font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 active:scale-95 rounded-xl shadow-2xs transition-all cursor-pointer">
+                <FaNewspaper className="w-4 h-4 2xl:w-6 2xl:h-6 text-slate-500" />
                 Read Articles
               </button>
             </div>
 
             {/* Stat Cards*/}
-            <div className="grid grid-cols-3 gap-3 pt-3 mt-1 border-t border-slate-200 max-w-lg">
+            <div className="grid grid-cols-3 gap-3 2xl:gap-6 pt-3 2xl:pt-7 mt-1 border-t border-slate-200 max-w-lg 2xl:max-w-2xl">
               {stats.map((s) => {
                 const Icon = s.icon;
                 return (
                   <div
                     key={s.label}
-                    className="group relative flex flex-col p-3 rounded-xl bg-white/90 border border-slate-200/80 shadow-2xs hover:shadow-md hover:border-red-200 transition-all duration-200"
+                    className="group relative flex flex-col p-3 2xl:p-6 rounded-xl bg-white/90 border border-slate-200/80 shadow-2xs hover:shadow-md hover:border-red-200 transition-all duration-200"
                   >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight group-hover:text-red-700 transition-colors">
+                    <div className="flex items-center justify-between mb-1 2xl:mb-3">
+                      <span className="text-xl sm:text-2xl 2xl:text-5xl font-black text-slate-900 tracking-tight group-hover:text-red-700 transition-colors">
                         {s.value}
                       </span>
-                      <Icon className="w-4 h-4 text-slate-400 group-hover:text-red-600 transition-colors" />
+                      <Icon className="w-4 h-4 2xl:w-6 2xl:h-6 text-slate-400 group-hover:text-red-600 transition-colors" />
                     </div>
-                    <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                    <span className="text-[10px] sm:text-[11px] 2xl:text-sm font-bold text-slate-500 uppercase tracking-wider">
                       {s.label}
                     </span>
                   </div>
@@ -141,13 +142,13 @@ function HeroSection() {
             </div>
           </div>
 
-          {/* Right Image  */}
+          {/* Right Image */}
           <div className="lg:col-span-5 flex justify-center lg:justify-end items-center h-full">
-            <div className="relative w-full max-w-xs sm:max-w-sm group">
+            <div className="relative w-full max-w-xs sm:max-w-sm 2xl:max-w-lg group">
               {/* Subtle Ambient Glow */}
               <div className="absolute -inset-1 bg-gradient-to-tr from-red-600 via-slate-800 to-red-900 rounded-3xl blur-md opacity-25 group-hover:opacity-40 transition duration-500" />
 
-              <div className="relative w-full aspect-[3/4] max-h-[360px] sm:max-h-[420px] rounded-2xl overflow-hidden shadow-2xl bg-slate-900 border border-slate-700">
+              <div className="relative w-full aspect-[3/4] max-h-[360px] sm:max-h-[420px] 2xl:max-h-[640px] rounded-2xl overflow-hidden shadow-2xl bg-slate-900 border border-slate-700">
                 <img
                   src="/hero.jpeg"
                   alt="Santosh Pokharel - Senior Reporter"
@@ -155,21 +156,21 @@ function HeroSection() {
                 />
 
                 {/* Broadcast Lower-Third Overlay Card */}
-                <div className="absolute bottom-3 left-3 right-3 z-10 flex items-stretch rounded-xl overflow-hidden shadow-2xl backdrop-blur-md bg-white/90 border border-white/60">
-                  <div className="w-1.5 bg-red-700" />
-                  <div className="px-3.5 py-2 flex-1 flex justify-between items-center">
+                <div className="absolute bottom-3 left-3 right-3 2xl:bottom-5 2xl:left-5 2xl:right-5 z-10 flex items-stretch rounded-xl overflow-hidden shadow-2xl backdrop-blur-md bg-white/90 border border-white/60">
+                  <div className="w-1.5 2xl:w-2.5 bg-red-700" />
+                  <div className="px-3.5 py-2 2xl:px-5 2xl:py-4 flex-1 flex justify-between items-center">
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <p className="text-slate-900 font-extrabold text-xs sm:text-sm tracking-tight leading-none">
+                        <p className="text-slate-900 font-extrabold text-xs sm:text-sm 2xl:text-lg tracking-tight leading-none">
                           Santosh Pokharel
                         </p>
-                        <HiOutlineSparkles className="w-3.5 h-3.5 text-red-600" />
+                        <HiOutlineSparkles className="w-3.5 h-3.5 2xl:w-5 2xl:h-5 text-red-600" />
                       </div>
-                      <p className="text-slate-500 font-medium text-[11px] mt-0.5">
+                      <p className="text-slate-500 font-medium text-[11px] 2xl:text-sm mt-0.5 2xl:mt-1.5">
                         Senior Reporter · GTV Nepal
                       </p>
                     </div>
-                    <span className="h-2 w-2 rounded-full bg-red-600 animate-ping" />
+                    <span className="h-2 w-2 2xl:h-3 2xl:w-3 rounded-full bg-red-600 animate-ping" />
                   </div>
                 </div>
               </div>
