@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const navLinks = ["News", "Blogs", "Videos", "Thoughts", "Contacts"];
+  const navLinks = ["Home", "Videos", "About", "Contacts"];
 
   return (
     <header className="sticky top-0 relative z-50 w-full bg-[#f8f7fb]/95 backdrop-blur-md border-b border-slate-200/60 px-4 md:px-8 py-3 transition-all">
