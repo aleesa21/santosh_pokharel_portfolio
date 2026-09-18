@@ -25,7 +25,7 @@ function HeroSection() {
   ];
 
   return (
-    <section className="relative bg-slate-900/5 text-slate-900 flex flex-col h-full w-full overflow-hidden border-b border-slate-200">
+    <section className="relative bg-slate-900/5 text-slate-900 flex flex-col w-full lg:h-full  border-b border-slate-200">
       {/* Background Subtle Mesh & Grid Pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px] opacity-60 pointer-events-none" />
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-red-100/40 rounded-full filter blur-3xl pointer-events-none" />
