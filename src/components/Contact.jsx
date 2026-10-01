@@ -88,15 +88,15 @@ function Contact() {
   ];
 
   return (
-    <section className="relative bg-white text-slate-900 flex flex-col w-full border-b border-slate-200 py-12 md:py-20 2xl:py-28 overflow-hidden">
+    <section id="contact" className="relative bg-white text-slate-900 flex flex-col w-full border-b border-slate-200 py-12 md:py-20 2xl:py-28 overflow-hidden">
       {/* Background Subtle Mesh & Grid Pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px] opacity-60 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] bg-size-[16px_16px] opacity-60 pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-red-100/40 rounded-full filter blur-3xl pointer-events-none" />
 
       <div className="relative z-10 mx-auto w-full px-4 md:px-15 2xl:px-20">
         {/* Section Header */}
         <div className="max-w-2xl mb-10 md:mb-14">
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-red-50 to-red-100/80 border border-red-200/90 px-3 py-1 2xl:px-5 2xl:py-2 rounded-full text-red-700 font-bold text-[11px] 2xl:text-sm tracking-wider shadow-xs mb-4">
+          <div className="inline-flex items-center gap-2 bg-linear-to-r from-red-50 to-red-100/80 border border-red-200/90 px-3 py-1 2xl:px-5 2xl:py-2 rounded-full text-red-700 font-bold text-[11px] 2xl:text-sm tracking-wider shadow-xs mb-4">
             <HiOutlineChatBubbleBottomCenterText className="w-4 h-4 2xl:w-6 2xl:h-6 text-red-600 animate-pulse" />
             <span>GET IN TOUCH · WORK & COLLABORATIONS</span>
           </div>

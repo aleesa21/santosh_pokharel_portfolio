@@ -43,7 +43,7 @@ function Video() {
         
         {/* Section Header */}
         <div className="flex flex-col gap-2 2xl:gap-4 mb-6 md:mb-10 2xl:mb-14">
-          <div className="inline-flex items-center gap-2 self-start bg-gradient-to-r from-red-50 to-red-100/80 border border-red-200/90 px-3 py-1 2xl:px-5 2xl:py-2 rounded-full text-red-700 font-bold text-[11px] 2xl:text-sm tracking-wider">
+          <div className="inline-flex items-center gap-2 self-start bg-linear-to-r from-red-50 to-red-100/80 border border-red-200/90 px-3 py-1 2xl:px-5 2xl:py-2 rounded-full text-red-700 font-bold text-[11px] 2xl:text-sm tracking-wider">
             <FaPlay className="w-2.5 h-2.5 2xl:w-4 2xl:h-4 text-red-600" />
             <span>BROADCAST WORK</span>
           </div>

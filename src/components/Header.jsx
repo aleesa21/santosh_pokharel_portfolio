@@ -4,16 +4,16 @@ import { Menu, X } from "lucide-react";
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const navLinks = ["Home", "Videos", "About", "Contacts"];
-
+  const navLinks = [
+    { name: "Home", link: "#hero" },
+    { name: "Videos", link: "#videos" },
+    { name: "About", link: "#about" },
+    { name: "Contacts", link: "#contact" },
+  ];
   return (
-    <header className="sticky top-0 relative z-50 w-full bg-[#f8f7fb]/95 backdrop-blur-md border-b border-slate-200/60 px-4 md:px-8 py-3 transition-all">
-      {" "}
+    <header className="sticky top-0  z-50 w-full bg-background/95 backdrop-blur-md border-b border-slate-200/60 px-4 md:px-8 py-3 transition-all">
       <div className="w-full mx-auto flex items-center justify-between">
         <a href="#" className="flex items-center gap-3 group">
-          {/* <div className="h-10 w-10 shrink-0 bg-red-900 text-white font-bold text-lg grid place-items-center rounded-full shadow-sm group-hover:bg-red-800 transition-colors">
-            स
-          </div> */}
           <div className="flex flex-col">
             <span className="font-semibold text-slate-900 leading-tight group-hover:text-red-900 transition-colors">
               Santosh Pokharel
@@ -25,13 +25,13 @@ function Header() {
         </a>
 
         <nav className="hidden  md:flex items-center gap-6">
-          {navLinks.map((link) => (
+          {navLinks.map(({ name, link }) => (
             <a
-              key={link}
-              href={`#${link.toLowerCase()}`}
+              key={name}
+              href={link}
               className="text-sm font-medium text-slate-600 hover:text-red-900 transition-colors"
             >
-              {link}
+              {name}
             </a>
           ))}
         </nav>
@@ -55,15 +55,15 @@ function Header() {
         </button>
       </div>
       {isMenuOpen && (
-        <nav className="md:hidden absolute top-full left-0 w-full bg-[#f8f7fb] border-y border-slate-200  shadow-lg px-4 pt-4 pb-6 flex flex-col gap-3">
-          {navLinks.map((link) => (
+        <nav className="md:hidden absolute top-full left-0 w-full bg-background border-y border-slate-200  shadow-lg px-4 pt-4 pb-6 flex flex-col gap-3">
+          {navLinks.map(({ name, link }) => (
             <a
-              key={link}
-              href={`#${link.toLowerCase()}`}
+              key={name}
+              href={link}
               onClick={() => setIsMenuOpen(false)}
               className="px-2 py-1 text-base font-medium text-slate-700 hover:text-red-900 transition-colors"
             >
-              {link}
+              {name}
             </a>
           ))}
           <div className="pt-2">

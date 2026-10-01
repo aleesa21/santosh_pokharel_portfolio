@@ -25,15 +25,15 @@ function HeroSection() {
   ];
 
   return (
-    <section className="relative bg-slate-900/5 text-slate-900 flex flex-col w-full lg:h-full  border-b border-slate-200">
+    <section id="hero" className="relative bg-slate-900/5 text-slate-900 flex flex-col w-full lg:h-full  border-b border-slate-200">
       {/* Background Subtle Mesh & Grid Pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px] opacity-60 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] bg-size-[16px_16px] opacity-60 pointer-events-none" />
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-red-100/40 rounded-full filter blur-3xl pointer-events-none" />
 
       {/* Breaking Marquee  */}
       <div className="relative z-10 shrink-0 border-b border-slate-950 bg-slate-950 text-white shadow-md">
         <div className="flex items-center">
-          <div className="shrink-0 flex items-center gap-2 bg-gradient-to-r from-red-700 via-red-600 to-red-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-2 shadow-lg z-10">
+          <div className="shrink-0 flex items-center gap-2 bg-linear-to-r from-red-700 via-red-600 to-red-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-2 shadow-lg z-10">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-80"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
@@ -62,7 +62,7 @@ function HeroSection() {
           {/* Left Text Content Column */}
           <div className="lg:col-span-7 flex flex-col gap-3 2xl:gap-7">
             {/* Live Indicator Badge */}
-            <div className="inline-flex items-center gap-2 self-start bg-gradient-to-r from-red-50 to-red-100/80 border border-red-200/90 px-3 py-1 2xl:px-5 2xl:py-2 rounded-full text-red-700 font-bold text-[11px] 2xl:text-sm tracking-wider shadow-xs">
+            <div className="inline-flex items-center gap-2 self-start bg-linear-to-r from-red-50 to-red-100/80 border border-red-200/90 px-3 py-1 2xl:px-5 2xl:py-2 rounded-full text-red-700 font-bold text-[11px] 2xl:text-sm tracking-wider shadow-xs">
               <HiRadio className="w-4 h-4 2xl:w-6 2xl:h-6 text-red-600 animate-pulse" />
               <span>ON AIR · GTV NEPAL</span>
             </div>
@@ -146,9 +146,9 @@ function HeroSection() {
           <div className="lg:col-span-5 flex justify-center lg:justify-end items-center h-full">
             <div className="relative w-full max-w-xs sm:max-w-sm 2xl:max-w-lg group">
               {/* Subtle Ambient Glow */}
-              <div className="absolute -inset-1 bg-gradient-to-tr from-red-600 via-slate-800 to-red-900 rounded-3xl blur-md opacity-25 group-hover:opacity-40 transition duration-500" />
+              <div className="absolute -inset-1 bg-linear-to-tr from-red-600 via-slate-800 to-red-900 rounded-3xl blur-md opacity-25 group-hover:opacity-40 transition duration-500" />
 
-              <div className="relative w-full aspect-[3/4] max-h-[360px] sm:max-h-[420px] 2xl:max-h-[640px] rounded-2xl overflow-hidden shadow-2xl bg-slate-900 border border-slate-700">
+              <div className="relative w-full aspect-3/4 max-h-90 sm:max-h-105 2xl:max-h-160 rounded-2xl overflow-hidden shadow-2xl bg-slate-900 border border-slate-700">
                 <img
                   src="/hero.jpeg"
                   alt="Santosh Pokharel - Senior Reporter"
