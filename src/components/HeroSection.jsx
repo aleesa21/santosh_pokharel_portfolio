@@ -12,20 +12,24 @@ import { TbFileReport } from "react-icons/tb";
 
 function HeroSection() {
   const tickerItems = [
-    "New episode airs Thursday, 8 PM on NTV",
-    "Gold trade investigation: part two out now",
-    "Parliament budget debate enters third day",
-    "Flood relief reaches 12 districts in eastern Nepal",
+    "17+ years across Nepali media",
+    "Experience across radio & television",
+    "Specializing in politics, public policy & investigations",
+    "Open to collaborations & media partnerships",
+    "Have a story tip? Get in touch",
   ];
 
   const stats = [
-    { value: "8+", label: "Years Exp.", icon: FaAward },
+    { value: "17+", label: "Years Exp.", icon: FaAward },
     { value: "2,100+", label: "Reports", icon: TbFileReport },
     { value: "77", label: "Districts Covered", icon: FaMapLocationDot },
   ];
 
   return (
-    <section id="hero" className="relative bg-slate-900/5 text-slate-900 flex flex-col w-full lg:h-full  border-b border-slate-200">
+    <section
+      id="hero"
+      className="relative bg-slate-900/5 text-slate-900 flex flex-col w-full lg:h-full  border-b border-slate-200"
+    >
       {/* Background Subtle Mesh & Grid Pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] bg-size-[16px_16px] opacity-60 pointer-events-none" />
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-red-100/40 rounded-full filter blur-3xl pointer-events-none" />
@@ -38,7 +42,7 @@ function HeroSection() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-80"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
             </span>
-            Breaking
+            Highlights
           </div>
           <div className="relative flex-1 overflow-hidden">
             <div className="flex whitespace-nowrap animate-marquee py-2 text-xs font-medium">
