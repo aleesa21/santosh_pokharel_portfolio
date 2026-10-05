@@ -7,7 +7,7 @@ function Header() {
   const navLinks = [
     { name: "Home", link: "#hero" },
     { name: "Videos", link: "#videos" },
-    { name: "About", link: "#about" },
+    { name: "Experience", link: "#experience" },
     { name: "Contacts", link: "#contact" },
   ];
   return (
