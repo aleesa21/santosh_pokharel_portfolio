@@ -154,7 +154,7 @@ function HeroSection() {
 
               <div className="relative w-full aspect-3/4 max-h-90 sm:max-h-105 2xl:max-h-160 rounded-2xl overflow-hidden shadow-2xl bg-slate-900 border border-slate-700">
                 <img
-                  src="/hero.jpeg"
+                  src="/hero.webp"
                   alt="Santosh Pokharel - Senior Reporter"
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
