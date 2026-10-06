@@ -1,38 +1,88 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaPlay } from "react-icons/fa6";
 
-function Video() {
-  const videos = [
-    {
-      id: 1,
-      title: "GTV Headlines | Major National Coverage",
-      category: "Live Broadcast",
-      date: "Sep 12, 2026",
-      youtubeUrl: "https://www.youtube.com/embed/axYJey7D5ds",
-    },
-    {
-      id: 2,
-      title: "Special Report: Ground Investigation on Public Policy",
-      category: "Investigative",
-      date: "Aug 28, 2026",
-      youtubeUrl: "https://www.youtube.com/embed/axYJey7D5ds",
-    },
-    {
-      id: 3,
-      title: "Parliamentary Debate & Legislative Updates",
-      category: "Politics",
-      date: "Aug 15, 2026",
-      youtubeUrl: "https://www.youtube.com/embed/axYJey7D5ds",
-    },
-    {
-      id: 4,
-      title: "District Relief Operations & Crisis Reporting",
-      category: "Field Report",
-      date: "Jul 10, 2026",
-      youtubeUrl: "https://www.youtube.com/embed/axYJey7D5ds",
-    },
-  ];
+function getYouTubeId(url) {
+  const match = url?.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/))([\w-]{11})/,
+  );
+  return match ? match[1] : null;
+}
 
+function VideoPlayer({ video }) {
+  const [playing, setPlaying] = useState(false);
+  const youtubeId = getYouTubeId(video.youtubeUrl);
+
+  if (!youtubeId) return null;
+
+  const thumb = `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
+
+  return (
+    <div className="relative w-full aspect-video bg-slate-900">
+      {playing ? (
+        <iframe
+          className="absolute inset-0 w-full h-full"
+          src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1`}
+          title={video.title}
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setPlaying(true)}
+          aria-label={`Play ${video.title}`}
+          className="group/play absolute inset-0 w-full h-full cursor-pointer"
+        >
+          <img
+            src={thumb}
+            alt={video.title}
+            width="480"
+            height="360"
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover"
+          />
+          <span className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover/play:bg-black/10 transition-colors">
+            <span className="flex h-12 w-12 2xl:h-16 2xl:w-16 items-center justify-center rounded-full bg-red-700 text-white shadow-lg group-hover/play:scale-110 transition-transform">
+              <FaPlay className="ml-0.5 w-4 h-4 2xl:w-6 2xl:h-6" />
+            </span>
+          </span>
+        </button>
+      )}
+    </div>
+  );
+}
+const videos = [
+  {
+    id: 1,
+    title: "GTV Headlines | Major National Coverage",
+    category: "Live Broadcast",
+    date: "Sep 12, 2026",
+    youtubeUrl: "https://www.youtube.com/embed/axYJey7D5ds",
+  },
+  {
+    id: 2,
+    title: "Special Report: Ground Investigation on Public Policy",
+    category: "Investigative",
+    date: "Aug 28, 2026",
+    youtubeUrl: "https://www.youtube.com/embed/axYJey7D5ds",
+  },
+  {
+    id: 3,
+    title: "Parliamentary Debate & Legislative Updates",
+    category: "Politics",
+    date: "Aug 15, 2026",
+    youtubeUrl: "https://www.youtube.com/embed/axYJey7D5ds",
+  },
+  {
+    id: 4,
+    title: "District Relief Operations & Crisis Reporting",
+    category: "Field Report",
+    date: "Jul 10, 2026",
+    youtubeUrl: "https://www.youtube.com/embed/axYJey7D5ds",
+  },
+];
+function Video() {
   return (
     <section
       id="videos"
@@ -40,7 +90,6 @@ function Video() {
     >
       {/* Aligned Container */}
       <div className="mx-auto w-full px-4 md:px-15 2xl:px-20">
-        
         {/* Section Header */}
         <div className="flex flex-col gap-2 2xl:gap-4 mb-6 md:mb-10 2xl:mb-14">
           <div className="inline-flex items-center gap-2 self-start bg-linear-to-r from-red-50 to-red-100/80 border border-red-200/90 px-3 py-1 2xl:px-5 2xl:py-2 rounded-full text-red-700 font-bold text-[11px] 2xl:text-sm tracking-wider">
@@ -56,23 +105,14 @@ function Video() {
           </p>
         </div>
 
-        {/* Responsive Video Grid (1 col mobile -> 2 cols tablet -> 3 cols laptop -> 4 cols desktop) */}
+        {/* Responsive Video Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 2xl:gap-8">
           {videos.map((video) => (
             <div
               key={video.id}
               className="group bg-white/90 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md hover:border-red-200 transition-all duration-200 overflow-hidden flex flex-col"
             >
-              {/* Aspect Ratio Embed Container */}
-              <div className="relative w-full aspect-video bg-slate-900">
-                <iframe
-                  className="absolute inset-0 w-full h-full"
-                  src={video.youtubeUrl}
-                  title={video.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
+              <VideoPlayer video={video} />
 
               {/* Card Meta */}
               <div className="p-3.5 2xl:p-5 flex flex-col justify-between flex-1">
@@ -91,7 +131,6 @@ function Video() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );
