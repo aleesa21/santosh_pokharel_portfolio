@@ -123,7 +123,7 @@ function Footer() {
               rel="noopener noreferrer"
               className="text-slate-400 hover:text-red-400 font-medium underline underline-offset-2 transition-colors"
             >
-              alishakafle.com.np
+          Alisha Kafle
             </a>
           </p>
         </div>
