@@ -17,3 +17,142 @@
 .animate-marquee {
   animation: marquee 28s linear infinite;
 }
+
+
+html,
+body {
+  margin: 0;
+  background: var(--color-background);
+}
+
+#splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+  padding: 0 16px;
+  background: var(--color-background);
+  color: #0f172a;
+  font-family: "Mukta", "Noto Sans Devanagari", system-ui, sans-serif;
+  transition: opacity 0.6s ease;
+}
+#splash.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* chiya cup: gentle sip tilt */
+#splash .cup {
+  transform-origin: 50% 100%;
+  animation: sp-sip 2.4s ease-in-out infinite;
+}
+@keyframes sp-sip {
+  0%, 100% { transform: rotate(0deg); }
+  50%      { transform: rotate(-7deg) translateY(-2px); }
+}
+
+#splash .steams {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  align-items: flex-end;
+}
+#splash .steams span {
+  display: block;
+  width: 6px;
+  height: 32px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.6);
+  filter: blur(3px);
+  opacity: 0;
+  animation: sp-steam 2.2s ease-in infinite;
+}
+#splash .steams span:nth-child(2) { animation-delay: 0.7s; }
+#splash .steams span:nth-child(3) { animation-delay: 1.4s; }
+@keyframes sp-steam {
+  0%   { transform: translateY(14px) scaleX(1); opacity: 0; }
+  30%  { opacity: 0.8; }
+  100% { transform: translateY(-14px) translateX(6px) scaleX(2); opacity: 0; }
+}
+
+/* title: words rise in one by one */
+#splash h1 {
+  margin: 0;
+  display: flex;
+  gap: 0.3em;
+  justify-content: center;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  font-size: clamp(3rem, 12vw, 4.5rem);
+}
+#splash .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(28px);
+  animation: sp-rise 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s forwards;
+}
+#splash .word.red {
+  color: var(--color-primary);
+  animation-delay: 0.45s;
+}
+@keyframes sp-rise {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* subtitle: rotating messages */
+#splash .sub {
+  margin: 0;
+  color: #475569;
+  font-weight: 600;
+  font-size: clamp(0.9rem, 3vw, 1rem);
+  opacity: 0;
+  animation: sp-fade 0.6s ease 1s forwards;
+}
+#splash #splash-msg {
+  display: inline-block;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+#splash #splash-msg.swap {
+  opacity: 0;
+  transform: translateY(6px);
+}
+@keyframes sp-fade {
+  to { opacity: 1; }
+}
+
+#splash .dots span { animation: sp-blink 1.4s infinite both; }
+#splash .dots span:nth-child(2) { animation-delay: 0.2s; }
+#splash .dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes sp-blink {
+  0%, 80%, 100% { opacity: 0; }
+  40%           { opacity: 1; }
+}
+
+/* mountains draw themselves */
+#splash .peaks {
+  width: min(220px, 60vw);
+  margin-top: 8px;
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+  animation: sp-draw 1.8s ease-in-out 0.6s forwards;
+}
+@keyframes sp-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #splash, #splash * {
+    animation: none !important;
+    transition: none !important;
+  }
+  #splash .word, #splash .sub { opacity: 1; transform: none; }
+  #splash .peaks { stroke-dashoffset: 0; }
+}
