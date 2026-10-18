@@ -1,5 +1,6 @@
 import React from "react";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
+
 import { RouterProvider } from "react-router/dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <AdminLayout />,
     children: [
+      {
+        index: true,
+        element: <Navigate to="videos" replace />,
+      },
       {
         path: "videos",
         element: <Adminvideos />,
