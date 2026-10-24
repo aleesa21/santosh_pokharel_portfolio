@@ -11,7 +11,7 @@ import {
   X,
 } from "lucide-react";
 import AddVideos, { getYouTubeId } from "./AddVideos";
-import { getVideos } from "../supabase/videos";
+import { getVideos, insertVideo, updateVideo } from "../supabase/videos";
 
 const toDate = (iso) => {
   if (!iso) return null;
@@ -222,15 +222,20 @@ function Adminvideos() {
       youtube_url: data.url,
     };
     const isEdit = Boolean(editing?.id);
-
+  
     try {
-      const saved = { ...record, id: isEdit ? editing.id : crypto.randomUUID() };
-
+      // 1. Save to Supabase first; it returns the real row (with the real id)
+      const saved = isEdit
+        ? await updateVideo(editing.id, record)
+        : await insertVideo(record);
+  
+      // 2. Only after success, update the local list
       setVideos((prev) =>
         isEdit
           ? prev.map((v) => (v.id === saved.id ? { ...v, ...saved } : v))
           : [saved, ...prev]
       );
+  
       closeModal();
       setToast({
         type: "success",
@@ -301,7 +306,7 @@ function Adminvideos() {
         <button
           type="button"
           onClick={openAdd}
-          className="flex shrink-0 cursor-pointer items-center gap-2 rounded-xl bg-gradient-to-b from-red-600 to-red-700 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-red-900/25 transition-all hover:from-red-500 hover:to-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 active:scale-95"
+          className="flex shrink-0 cursor-pointer items-center gap-2 rounded-xl bg-linear-to-b from-red-600 to-red-700 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-red-900/25 transition-all hover:from-red-500 hover:to-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 active:scale-95"
         >
           <Plus size={18} />
           Add video
@@ -389,6 +394,7 @@ function Adminvideos() {
                 <Plus size={15} />
                 Add video
               </button>
+              
             }
           />
         </div>
@@ -501,7 +507,7 @@ function Adminvideos() {
         <div
           role="status"
           aria-live="polite"
-          className={`fixed bottom-5 left-1/2 z-[60] flex -translate-x-1/2 items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white shadow-lg ${
+          className={`fixed bottom-5 left-1/2 z-60 flex -translate-x-1/2 items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white shadow-lg ${
             toast.type === "error" ? "bg-red-700" : "bg-slate-900"
           }`}
         >
