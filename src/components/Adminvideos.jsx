@@ -9,9 +9,12 @@ import {
   Search,
   SearchX,
   X,
+  Trash2 ,
 } from "lucide-react";
 import AddVideos, { getYouTubeId } from "./AddVideos";
-import { getVideos, insertVideo, updateVideo } from "../supabase/videos";
+import { deleteVideo, getVideos, insertVideo, updateVideo } from "../supabase/videos";
+import { supabase } from "../supabase/supabase";
+import ConfirmModal from "./ConfirmModal";
 
 const toDate = (iso) => {
   if (!iso) return null;
@@ -64,6 +67,8 @@ function CategoryChip({ category, className = "" }) {
   );
 }
 
+
+//thumbnail jasto video
 function Thumb({ video, className = "" }) {
   const id = getYouTubeId(video.youtube_url ?? "");
   return (
@@ -93,8 +98,6 @@ function Thumb({ video, className = "" }) {
   );
 }
 
-const iconBtn =
-  "flex h-9 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-transparent px-2.5 text-sm font-semibold text-slate-500 transition-colors hover:border-slate-200 hover:bg-white hover:text-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500";
 
 const secondaryBtn =
   "inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition-all hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 active:scale-95";
@@ -146,18 +149,17 @@ function ListSkeleton() {
   );
 }
 
-/* ---------- page ---------- */
 
 function Adminvideos() {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
+  const [deleteTarget, setDeleteTarget] = useState(null); // null or a video
 
   // null = closed, {} = adding, {...video} = editing
   const [editing, setEditing] = useState(null);
 
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("All");
   const [toast, setToast] = useState(null); // { type: "success" | "error", message }
 
   const closeModal = () => setEditing(null);
@@ -181,7 +183,7 @@ function Adminvideos() {
   useEffect(() => {
     fetchVideos();
   }, [fetchVideos]);
-
+  
   // Close modal on Escape + lock background scroll while it is open
   useEffect(() => {
     if (!editing) return;
@@ -222,20 +224,20 @@ function Adminvideos() {
       youtube_url: data.url,
     };
     const isEdit = Boolean(editing?.id);
-  
+
     try {
-      // 1. Save to Supabase first; it returns the real row (with the real id)
+      // Save to Supabase first; it returns the real row (with the real id)
       const saved = isEdit
         ? await updateVideo(editing.id, record)
         : await insertVideo(record);
-  
+
       // 2. Only after success, update the local list
       setVideos((prev) =>
         isEdit
           ? prev.map((v) => (v.id === saved.id ? { ...v, ...saved } : v))
           : [saved, ...prev]
       );
-  
+
       closeModal();
       setToast({
         type: "success",
@@ -250,15 +252,27 @@ function Adminvideos() {
     }
   };
 
-  const categories = useMemo(
-    () => ["All", ...new Set(videos.map((v) => v.category?.trim()).filter(Boolean))],
-    [videos]
-  );
 
+  const handleDelete = async () => {
+    const video = deleteTarget;
+    if (!video) return;
+    try {
+      await deleteVideo(video.id);
+      setVideos((prev) => prev.filter((v) => v.id !== video.id));
+      setToast({ type: "success", message: "Video deleted." });
+    } catch (e) {
+      console.warn(e);
+      setToast({
+        type: "error",
+        message: e?.message || "Couldn't delete the video. Try again.",
+      });
+    } finally {
+      setDeleteTarget(null);
+    }
+  };
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
     return videos
-      .filter((v) => category === "All" || v.category?.trim() === category)
       .filter(
         (v) =>
           !q ||
@@ -270,12 +284,11 @@ function Adminvideos() {
           String(b.date ?? "").localeCompare(String(a.date ?? "")) ||
           String(b.created_at ?? "").localeCompare(String(a.created_at ?? ""))
       );
-  }, [videos, query, category]);
+  }, [videos, query]);
 
-  const filtersActive = query.trim() !== "" || category !== "All";
+  const filtersActive = query.trim() !== "" ;
   const clearFilters = () => {
     setQuery("");
-    setCategory("All");
   };
 
   const hasVideos = !loading && !loadError && videos.length > 0;
@@ -333,29 +346,6 @@ function Adminvideos() {
             </div>
           </div>
 
-          {categories.length > 2 && (
-            <div
-              className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0"
-              role="group"
-              aria-label="Filter by category"
-            >
-              {categories.map((c) => (
-                <button
-                  key={c}
-                  type="button"
-                  onClick={() => setCategory(c)}
-                  aria-pressed={category === c}
-                  className={`shrink-0 cursor-pointer rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 ${
-                    category === c
-                      ? "border-red-700 bg-red-700 text-white"
-                      : "border-slate-200 bg-white text-slate-600 hover:bg-slate-100"
-                  }`}
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
-          )}
 
           {filtersActive && (
             <p className="text-sm text-slate-500">
@@ -394,7 +384,7 @@ function Adminvideos() {
                 <Plus size={15} />
                 Add video
               </button>
-              
+
             }
           />
         </div>
@@ -420,7 +410,7 @@ function Adminvideos() {
             <span>Title</span>
             <span>Category</span>
             <span>Date</span>
-            <span className="sr-only">Actions</span>
+            <span >Actions</span>
           </div>
 
           <ul className="divide-y divide-slate-100">
@@ -429,6 +419,7 @@ function Adminvideos() {
               return (
                 <li
                   key={v.id}
+                  onClick={() => setEditing(v)}
                   className={`${listGrid} px-4 py-4 transition-all hover:bg-slate-50`}
                 >
                   <Thumb video={v} className="rounded-lg ring-1 ring-slate-200" />
@@ -454,18 +445,32 @@ function Adminvideos() {
                     <p className="text-sm font-medium text-slate-700">
                       {formatDate(v.date)}
                     </p>
+                
                     {rel && <p className="text-xs text-slate-400">{rel}</p>}
                   </div>
+                  <div className="flex items-center gap-2 md:justify-self-end"
+                    onClick={(e) => e.stopPropagation()}
+>
+                    <button
+                      type="button"
+                      onClick={() => setEditing(v)}
+                      aria-label={`Edit ${v.title}`}
+                      title="Edit"
+                      className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg bg-blue-50 text-blue-600 transition-all hover:bg-blue-100 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 active:scale-95"
+                    >
+                      <Pencil size={16} />
+                    </button>
 
-                  <button
-                    type="button"
-                    onClick={() => setEditing(v)}
-                    aria-label={`Edit ${v.title}`}
-                    className={`${iconBtn} md:justify-self-end`}
-                  >
-                    <Pencil size={15} />
-                    <span className="hidden md:inline">Edit</span>
-                  </button>
+                    <button
+                      type="button"
+                      onClick={() => setDeleteTarget(v)}
+                      aria-label={`Delete ${v.title}`}
+                      title="Delete"
+                      className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg bg-red-50 text-red-600 transition-all hover:bg-red-100 hover:text-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 active:scale-95"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
                 </li>
               );
             })}
@@ -519,6 +524,19 @@ function Adminvideos() {
           {toast.message}
         </div>
       )}
+
+{/* delete confirm model */}      
+
+      
+      <ConfirmModal
+        open={Boolean(deleteTarget)}
+        danger
+        title="डिलिट गर्दिम यो भिडियो?"
+        message={`"${deleteTarget?.title}" will be permanently removed.`}
+        confirmText="गर्दिम गर्दिम"
+        onConfirm={handleDelete}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }
