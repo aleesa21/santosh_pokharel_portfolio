@@ -44,11 +44,10 @@ function Contact() {
         setSending(false);
       })
       .catch((err) => {
-        console.log("EmailJS error:", err);
+        console.warn("EmailJS error:", err);
         setError("Something went wrong. Please try again.");
         setSending(false);
       });
-    console.log(formData);
   };
 
   const quickChannels = [
