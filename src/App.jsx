@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import AdminLayout from "./components/Adminlayout";
 import Adminvideos from "./components/Adminvideos";
 import Personaldetails from "./components/Personaldetails";
+import Login from "./components/Login";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/login",
+    element:<Login />
+  }
 ]);
 function App() {
   return <RouterProvider router={router}></RouterProvider>;

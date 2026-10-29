@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { useNavigate } from "react-router";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const navLinks = [
     { name: "Home", link: "#hero" },
@@ -36,8 +38,11 @@ function Header() {
           ))}
         </nav>
 
+        
         <div className="hidden md:block">
-          <button className="px-5 py-2 text-sm font-medium text-white bg-red-900 hover:bg-red-800 rounded-full transition-all shadow-sm active:scale-95 cursor-pointer">
+          <button
+            onClick={()=>{navigate("/login")}}
+            className="px-5 py-2 text-sm font-medium text-white bg-red-900 hover:bg-red-800 rounded-full transition-all shadow-sm active:scale-95 cursor-pointer">
             Login
           </button>
         </div>
@@ -67,7 +72,10 @@ function Header() {
             </a>
           ))}
           <div className="pt-2">
-            <button className="w-full py-2.5 text-sm font-medium text-white bg-red-900 hover:bg-red-800 rounded-lg transition-colors">
+            <button
+              onClick={()=>{navigate("/login")}}
+
+              className="w-full py-2.5 text-sm font-medium text-white bg-red-900 hover:bg-red-800 rounded-lg transition-colors">
               Login
             </button>
           </div>
