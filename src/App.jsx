@@ -9,6 +9,8 @@ import AdminLayout from "./components/Adminlayout";
 import Adminvideos from "./components/Adminvideos";
 import Personaldetails from "./components/Personaldetails";
 import Login from "./components/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider } from "./context/AuthContext";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +28,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <AdminLayout />,
+    element: (
+      <ProtectedRoute>
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
@@ -44,11 +50,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element:<Login />
-  }
+    element: <Login />,
+  },
 ]);
 function App() {
-  return <RouterProvider router={router}></RouterProvider>;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 }
 
 export default App;
