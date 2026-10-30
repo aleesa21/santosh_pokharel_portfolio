@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router";
+import { useAuth } from "../context/AuthContext";
 import {
   AlertCircle,
   ArrowLeft,
@@ -21,6 +22,7 @@ const inputClass =
 
 function Login() {
   const navigate = useNavigate();
+    const { user, loading: authLoading, login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,27 +31,31 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError("");
 
-    // Quick client-side validation
-    if (!email.trim() || !password) {
-      setError("Please fill in all required credentials.");
-      return;
+  useEffect(() => {
+    if (!authLoading && user) {
+      navigate("/admin", { replace: true });
     }
-
-    
-
-    setLoading(true);
-
-    console.log("--- Form Submitted ---");
-    console.log("Email:", email.trim());
-
-    
-  };
-
- 
+  }, [user, authLoading, navigate]);
+  
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      setError("");
+  
+      if (!email.trim() || !password) {
+        setError("Please fill in all required credentials.");
+        return;
+      }
+  
+      setLoading(true);
+      try {
+        await login(email, password);
+      } catch (err) {
+        setError(err.message || "Invalid email or password.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
   return (
     <div className="flex min-h-screen w-full bg-slate-950 font-sans text-stone-900 selection:bg-red-800 selection:text-white">
@@ -57,16 +63,16 @@ function Login() {
       <aside className="relative hidden w-1/2 max-w-xl flex-col justify-between overflow-hidden bg-slate-950 p-12 text-white lg:flex border-r border-slate-800">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-20 -top-20 h-[400px] w-[400px] rounded-full bg-red-600/20 blur-3xl animate-pulse"
+          className="pointer-events-none absolute -right-20 -top-20 h-100 w-100 rounded-full bg-red-600/20 blur-3xl animate-pulse"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -bottom-28 -left-28 h-[400px] w-[400px] rounded-full bg-orange-600/15 blur-3xl"
+          className="pointer-events-none absolute -bottom-28 -left-28 h-100 w-100 rounded-full bg-orange-600/15 blur-3xl"
         />
-        
+
         <Link to={"/"} className="inline-block w-fit">
           <div className="relative z-10 flex items-center gap-3.5 transition-opacity hover:opacity-90">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-red-600 to-red-800 text-white shadow-lg shadow-red-700/30 ring-1 ring-white/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-linear-to-br from-red-600 to-red-800 text-white shadow-lg shadow-red-700/30 ring-1 ring-white/20">
               <Radio size={22} />
             </div>
             <div>
@@ -87,12 +93,13 @@ function Login() {
           </div>
           <h2 className="text-4xl font-black tracking-tight text-white leading-tight">
             Manage your <br />
-            <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
               portfolio, your way.
             </span>
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-slate-400">
-            Update videos, contact info, and reports in real time. Changes reflect live instantly across your platform.
+            Update videos, contact info, and reports in real time. Changes
+            reflect live instantly across your platform.
           </p>
         </div>
 
@@ -105,14 +112,13 @@ function Login() {
       {/* Right */}
       <main className="relative flex flex-1 items-start justify-center bg-[#f7f5f2] px-4 sm:px-8 py-6 sm:py-12 lg:items-center">
         <div className="w-full max-w-md">
-          
           {/* Mobile */}
           <Link
             to="/"
             className="mb-6 inline-flex items-center gap-2 rounded-lg border border-stone-300 bg-white px-3.5 py-2 text-sm font-semibold text-stone-700 shadow-sm transition-all hover:border-red-700 hover:text-red-800 focus:outline-hidden focus:ring-4 focus:ring-red-700/10 "
           >
             <ArrowLeft size={16} />
-            <span >Back to Home</span>
+            <span>Back to Home</span>
           </Link>
 
           <div className="mb-6 flex items-center gap-3 lg:hidden">
@@ -123,9 +129,7 @@ function Login() {
               <p className="text-sm font-bold text-stone-900">
                 Santosh Pokharel
               </p>
-              <p className="text-xs font-medium text-stone-500">
-                Admin Panel
-              </p>
+              <p className="text-xs font-medium text-stone-500">Admin Panel</p>
             </div>
           </div>
 
@@ -148,7 +152,10 @@ function Login() {
                 role="alert"
                 className="flex items-start gap-2.5 rounded-xl border border-red-200 bg-red-50 p-3.5 text-xs font-semibold text-red-700"
               >
-                <AlertCircle size={16} className="mt-0.5 shrink-0 text-red-600" />
+                <AlertCircle
+                  size={16}
+                  className="mt-0.5 shrink-0 text-red-600"
+                />
                 <span>{error}</span>
               </div>
             )}
@@ -221,8 +228,6 @@ function Login() {
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
-              
-              
             </div>
 
             {/* Submit Button */}
@@ -237,7 +242,9 @@ function Login() {
                 ) : (
                   <LogIn size={16} />
                 )}
-                <span>{loading ? "Authenticating..." : "Sign in to dashboard"}</span>
+                <span>
+                  {loading ? "Authenticating..." : "Sign in to dashboard"}
+                </span>
               </div>
               <ArrowRight size={16} />
             </button>
@@ -255,7 +262,6 @@ function Login() {
               </p>
             </div>
           </div>
-
         </div>
       </main>
     </div>

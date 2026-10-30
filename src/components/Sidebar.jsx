@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router";
+import { NavLink, useLocation,useNavigate } from "react-router";
 import { Video, FileText, LogOut, Radio, Menu, X } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 const navItems = [
   { to: "/admin/videos", label: "Videos", icon: Video },
@@ -10,6 +11,8 @@ const navItems = [
 function Sidebar() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+   const { logout } = useAuth();
 
   // Close the drawer after navigating
   useEffect(() => {
@@ -29,6 +32,15 @@ function Sidebar() {
     };
   }, [open]);
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/", { replace: true });
+    } catch (err) {
+      console.error("Logout failed:", err.message);
+    }
+  };
+  
   return (
     <>
       {/* Mobile top bar */}
@@ -128,6 +140,7 @@ function Sidebar() {
         <div className="border-t border-slate-800 p-3">
           <button
             type="button"
+            onClick={handleLogout}
 
             className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-300 transition-all hover:bg-slate-800/80 hover:text-red-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 active:scale-95"
           >
