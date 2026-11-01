@@ -156,3 +156,26 @@ body {
   #splash .word, #splash .sub { opacity: 1; transform: none; }
   #splash .peaks { stroke-dashoffset: 0; }
 }
+
+
+/* Track (the background lane) */
+@media (hover: hover) and (pointer: fine) {
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8f7fb; 
+}
+
+/* Thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background: #c1000f; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e0001a;
+}
+}

@@ -11,7 +11,7 @@ import { HiOutlineSparkles } from "react-icons/hi2";
 // Original order
 const experiences = [
   { id: 1, role: "News Reader", organization: "Radio Darpan 88.4 MHz, Bardibas", period: "1 Year", icon: FaRadio, current: false },
-  { id: 2, role: "Editor (सम्पादक)", organization: "Madhya Aawaj Weekly", period: "2065 Shrawan – Present", icon: FaNewspaper, current: true },
+  { id: 2, role: "Editor", organization: "Madhya Aawaj Weekly", period: "2065 Shrawan – Present", icon: FaNewspaper, current: true },
   { id: 3, role: "News Chief", organization: "Radio Bardibas", period: "1 Year", icon: FaRadio, current: false },
   { id: 4, role: "Program Developer", organization: "Daily TV Karyakram / Program Development Forum", period: "2015 – Present", icon: FaTv, current: true },
   { id: 5, role: "Sub Editor", organization: "Palika Khabar Media Pvt. Ltd.", period: "Media Professional", icon: FaBuildingColumns, current: false },
