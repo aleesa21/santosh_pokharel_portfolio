@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, useLocation,useNavigate } from "react-router";
+import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { Video, FileText, LogOut, Radio, Menu, X } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
@@ -12,7 +12,7 @@ function Sidebar() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
-   const { logout } = useAuth();
+  const { logout } = useAuth();
 
   // Close the drawer after navigating
   useEffect(() => {
@@ -40,17 +40,19 @@ function Sidebar() {
       console.error("Logout failed:", err.message);
     }
   };
-  
+
   return (
     <>
       {/* Mobile top bar */}
       <header className="fixed inset-x-0 top-0 z-30 flex h-14 items-center justify-between border-b border-slate-800 bg-slate-950 px-4 text-white md:hidden">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-red-700 to-red-600">
-            <Radio size={16} className="text-white" />
+        <Link to={"/"}>
+          <div className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-red-700 to-red-600">
+              <Radio size={16} className="text-white" />
+            </div>
+            <span className="text-sm font-extrabold tracking-tight">Admin</span>
           </div>
-          <span className="text-sm font-extrabold tracking-tight">Admin</span>
-        </div>
+        </Link>
         <button
           type="button"
           onClick={() => setOpen(true)}
@@ -80,20 +82,21 @@ function Sidebar() {
         <div>
           {/* Brand */}
           <div className="flex items-center justify-between border-b border-slate-800 px-5 py-5">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-red-700 to-red-600 shadow-md shadow-red-900/30">
-                <Radio size={20} className="text-white" />
+            <Link to={"/"}>
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-red-700 to-red-600 shadow-md shadow-red-900/30">
+                  <Radio size={20} className="text-white" />
+                </div>
+                <div className="leading-tight">
+                  <p className="text-sm font-extrabold tracking-tight">
+                    Santosh Pokharel
+                  </p>
+                  <p className="text-xs font-medium text-slate-400">
+                    Admin panel
+                  </p>
+                </div>
               </div>
-              <div className="leading-tight">
-                <p className="text-sm font-extrabold tracking-tight">
-                  Santosh Pokharel
-                </p>
-                <p className="text-xs font-medium text-slate-400">
-                  Admin panel
-                </p>
-              </div>
-            </div>
-
+            </Link>
             <button
               type="button"
               onClick={() => setOpen(false)}
