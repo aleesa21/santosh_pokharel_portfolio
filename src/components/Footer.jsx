@@ -2,6 +2,7 @@ import React from "react";
 import { FaYoutube, FaFacebook, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Mail, ArrowUp, Heart } from "lucide-react";
+import { usePersonalDetails } from "../context/PersonalDetailsContext";
 
 function Footer() {
   const navLinks = [
@@ -10,10 +11,11 @@ function Footer() {
     { name: "Experience", link: "#experience" },
     { name: "Contacts", link: "#contact" },
   ];
+  const { details } = usePersonalDetails();
 
   const socialLinks = [
-    { name: "Facebook", href: "#", icon: FaFacebook },
-    { name: "X (Twitter)", href: "#", icon: FaXTwitter },
+    { name: "Facebook", href: details?.facebook_link, icon: FaFacebook },
+    { name: "X (Twitter)", href:details?.tiktok_link, icon: FaXTwitter },
   ];
 
   const scrollToTop = () => {
@@ -30,7 +32,7 @@ function Footer() {
             <div>
               <a href="#" className="flex flex-col group mb-4">
                 <span className="text-xl font-bold text-white group-hover:text-red-500 transition-colors">
-                  Santosh Pokharel
+                  {details?.name|| "Santosh Pokharel"}
                 </span>
                 <span className="text-xs text-red-400 font-medium tracking-wide uppercase">
                   TV Journalist · GTV Nepal
@@ -88,7 +90,7 @@ function Footer() {
                 className="text-sm text-slate-400 hover:text-red-400 transition-colors flex items-center gap-2"
               >
                 <Mail className="w-4 h-4 text-red-500" />
-                contact@santoshpokharel.com
+                {details?.email}
               </a>
             </div>
 

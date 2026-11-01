@@ -1,14 +1,16 @@
 import React from "react";
-// Icons imported from react-icons (Fa6, Hi2, Tb, Io5)
 import {
   FaPlay,
   FaNewspaper,
-  FaBullhorn,
   FaAward,
   FaMapLocationDot,
 } from "react-icons/fa6";
 import { HiOutlineSparkles, HiRadio } from "react-icons/hi2";
 import { TbFileReport } from "react-icons/tb";
+import { usePersonalDetails } from "../context/PersonalDetailsContext";
+import { Link, useNavigate } from "react-router";
+import { getPhotoUrl } from "../supabase/details";
+import { useState } from "react";
 
 function HeroSection() {
   const tickerItems = [
@@ -24,7 +26,16 @@ function HeroSection() {
     { value: "2,100+", label: "Reports", icon: TbFileReport },
     { value: "77", label: "Districts Covered", icon: FaMapLocationDot },
   ];
+  const { details,loading } = usePersonalDetails();
+  const photoUrl = getPhotoUrl(details?.photo_path);
 
+  const [firstName, ...rest] = (details?.name ?? "").split(" ");
+  const lastName = rest.join(" ");
+  const navigate = useNavigate();
+  const [imgLoaded, setImgLoaded] = useState(false);
+  
+  const showSkeleton = loading || (photoUrl && !imgLoaded);
+  
   return (
     <section
       id="hero"
@@ -74,7 +85,7 @@ function HeroSection() {
             {/* Name Header */}
             <div className="space-y-0">
               <h1 className="text-3xl sm:text-5xl lg:text-6xl 2xl:text-9xl font-black text-slate-900 tracking-tight leading-none">
-                Santosh <span className="text-red-700">Pokharel</span>
+                {firstName ||"Santosh"} <span className="text-red-700">{lastName ||"Pokharel" }</span>
               </h1>
               <div className="pt-1 2xl:pt-4 flex items-center gap-2 2xl:gap-4">
                 <h2 className="text-sm sm:text-base 2xl:text-2xl text-slate-600 font-medium tracking-wide">
@@ -112,7 +123,12 @@ function HeroSection() {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-3 2xl:gap-5 pt-1">
-              <button className="flex items-center gap-2 2xl:gap-3 px-5 py-2.5 2xl:px-9 2xl:py-4 text-xs sm:text-sm 2xl:text-lg font-bold text-white bg-red-700 hover:bg-red-800 active:scale-95 rounded-xl shadow-md shadow-red-900/10 transition-all cursor-pointer group">
+
+              <button
+                onClick={() =>
+                    document.getElementById("videos")?.scrollIntoView({ behavior: "smooth" })
+                  }
+                className="flex items-center gap-2 2xl:gap-3 px-5 py-2.5 2xl:px-9 2xl:py-4 text-xs sm:text-sm 2xl:text-lg font-bold text-white bg-red-700 hover:bg-red-800 active:scale-95 rounded-xl shadow-md shadow-red-900/10 transition-all cursor-pointer group">
                 <FaPlay className="w-3.5 h-3.5 2xl:w-5 2xl:h-5 fill-current group-hover:scale-110 transition-transform" />
                 Watch Latest Reports
               </button>
@@ -153,11 +169,23 @@ function HeroSection() {
               <div className="absolute -inset-1 bg-linear-to-tr from-red-600 via-slate-800 to-red-900 rounded-3xl blur-md opacity-25 group-hover:opacity-40 transition duration-500" />
 
               <div className="relative w-full aspect-3/4 max-h-90 sm:max-h-105 2xl:max-h-160 rounded-2xl overflow-hidden shadow-2xl bg-slate-900 border border-slate-700">
-                <img
-                  src="/hero.webp"
-                  alt="Santosh Pokharel - Senior Reporter"
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
+                {showSkeleton && (
+                    <div className="absolute inset-0 z-[5] flex items-center justify-center bg-slate-800 animate-pulse">
+                      <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-600 border-t-red-600" />
+                    </div>
+                  )}
+                
+                  {photoUrl && (
+                    <img
+                      src={photoUrl}
+                      alt={details?.name ?? "Profile photo"}
+                      onLoad={() => setImgLoaded(true)}
+                      onError={() => setImgLoaded(true)}
+                      className={`absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out ${
+                        imgLoaded ? "opacity-100" : "opacity-0"
+                      }`}
+                    />
+                  )}
 
                 {/* Broadcast Lower-Third Overlay Card */}
                 <div className="absolute bottom-3 left-3 right-3 2xl:bottom-5 2xl:left-5 2xl:right-5 z-10 flex items-stretch rounded-xl overflow-hidden shadow-2xl backdrop-blur-md bg-white/90 border border-white/60">
@@ -166,7 +194,7 @@ function HeroSection() {
                     <div>
                       <div className="flex items-center gap-1.5">
                         <p className="text-slate-900 font-extrabold text-xs sm:text-sm 2xl:text-lg tracking-tight leading-none">
-                          Santosh Pokharel
+                          {details?.name ||"Santosh Pokharel"}
                         </p>
                         <HiOutlineSparkles className="w-3.5 h-3.5 2xl:w-5 2xl:h-5 text-red-600" />
                       </div>

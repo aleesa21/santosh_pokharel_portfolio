@@ -3,6 +3,7 @@ import { FaEnvelope, FaPhone, FaPaperPlane } from "react-icons/fa6";
 import { FaTwitter, FaFacebookF } from "react-icons/fa";
 import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
 import emailjs from "@emailjs/browser";
+import { usePersonalDetails } from "../context/PersonalDetailsContext";
 
 const SERVICE_ID = import.meta.env.VITE_SERVICE_ID;
 const TEMPLATE_ID = import.meta.env.VITE_TEMPLATE_ID;
@@ -21,6 +22,9 @@ function Contact() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const { details } = usePersonalDetails();
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,7 +57,7 @@ function Contact() {
   const quickChannels = [
     {
       title: "Email",
-      value: "santosh.pokharel@gtvnepal.com",
+      value: details?.email,
       actionText: "Write Email",
       href: "mailto:santosh.pokharel@gtvnepal.com",
       icon: FaEnvelope,
@@ -62,7 +66,7 @@ function Contact() {
     },
     {
       title: "Phone Number",
-      value: "+977 1-4200000",
+      value: details?.phone,
       actionText: "Call Now",
       href: "tel:+97714200000",
       icon: FaPhone,
@@ -74,13 +78,13 @@ function Contact() {
   const socialLinks = [
     {
       icon: FaFacebookF,
-      href: "https://www.facebook.com/santosh.pokhrel.355",
+      href: details?.facebook_link,
       label: "Facebook",
       handle: "GTV Nepal",
     },
     {
       icon: FaTwitter,
-      href: "https://www.facebook.com/santosh.pokhrel.355",
+      href:details?.twitter_link,
       label: "Twitter / X",
       handle: "@GTVNepal",
     },

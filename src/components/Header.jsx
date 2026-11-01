@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useNavigate } from "react-router";
+import { usePersonalDetails } from "../context/PersonalDetailsContext";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { details } = usePersonalDetails();
+
 
   const navLinks = [
     { name: "Home", link: "#hero" },
@@ -18,7 +21,7 @@ function Header() {
         <a href="#" className="flex items-center gap-3 group">
           <div className="flex flex-col">
             <span className="font-semibold text-slate-900 leading-tight group-hover:text-red-900 transition-colors">
-              Santosh Pokharel
+              {details?.name ||"Santosh Pokharel"}
             </span>
             <span className="text-xs text-slate-500 font-medium">
               TV Journalist · GTV Nepal
